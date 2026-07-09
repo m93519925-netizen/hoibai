@@ -38,7 +38,7 @@ function auth_sign_in(string $email, string $password): array {
     return supabase_request('/auth/v1/token?grant_type=password', 'POST', ['email' => $email, 'password' => $password]);
 }
 
-function get_current_user(): ?array {
+function get_supabase_user(): ?array {
     if (empty($_SESSION['access_token'])) return null;
     $r = supabase_request('/auth/v1/user');
     return $r['status'] === 200 ? $r['data'] : null;
@@ -111,7 +111,7 @@ function csrf_verify(): void {
 }
 
 function require_login(): array {
-    $user = get_current_user();
+    $user = get_supabase_user();
     if (!$user) { header('Location: /login.php'); exit; }
     return $user;
 }
