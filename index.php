@@ -2,8 +2,8 @@
 require_once 'config/supabase.php';
 require_once 'includes/subjects.php';
 
-$user    = get_current_user();
-$profile = $user ? get_profile($user['id']) : null;
+$user    = get_supabase_user();
+$profile = ($user && isset($user['id'])) ? get_profile($user['id']) : null;
 
 $grade   = $_GET['grade']   ?? '';
 $subject = $_GET['subject'] ?? '';
